@@ -37,7 +37,7 @@ export default {
           if (valid) {
             alert('submit!');
           } else {
-            this.$message.error('请输入所有字段');;
+            this.$message.error('请输入所有字段');
             return false;
           }
         });
