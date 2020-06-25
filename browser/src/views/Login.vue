@@ -7,7 +7,7 @@
           </el-input>
         </el-form-item>
         <el-form-item prop='password'>
-          <el-input type='text' v-model="loginForm.password" auto-complete="off" placeholder="请输入用户密码">
+          <el-input type='password' v-model="loginForm.password" auto-complete="off" placeholder="请输入用户密码">
           </el-input>
         </el-form-item>
         <el-checkbox class="loginRemember" size="normal" v-model="checked"></el-checkbox>
@@ -25,6 +25,7 @@ export default {
         username: 'admin',
         password: '123'
       },
+      checked: true,
       rules:{
         username: [{required: true, message: "请输入用户名", trigger: 'blur'}],
         password: [{required: true, message: "请输入密码", trigger: 'blur'}]
@@ -35,7 +36,15 @@ export default {
     submitLogin() {
         this.$refs.loginForm.validate((valid) => {
           if (valid) {
-            alert('submit!');
+            this.postKeyValueRequest('/doLogin', this.loginForm).then(resp => {
+              if(resp){
+                //this.$store.commit('INIT_CURRENTHR', resp.obj);
+                window.sessionStorage.setItem("user", JSON.stringify(resp.obj));
+                //let path = this.$route.query.redirect;
+                //this.$router.replace((path == '/' || path == undefined) ? '/home' : path);
+                this.$router.replace('/home');
+              }
+            })
           } else {
             this.$message.error('请输入所有字段');
             return false;
