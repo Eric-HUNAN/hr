@@ -2,7 +2,7 @@
   <div>
     <el-container>
       <el-header class="homeHeader">
-        <div class="title">华中科技大学科研团队管理系统</div>
+        <div class="title">激光先进加工与前沿应用团队人事管理系统</div>
         <div>
           <el-button
             icon="el-icon-bell"
@@ -27,18 +27,35 @@
       </el-header>
       <el-container>
         <el-aside width="200px">
-          <el-menu @select="menuClick">
-            <el-submenu  :index="index+''" v-for="(item,index) in this.$router.options.routes" v-if="!item.hidden" :key="index">
+          <el-menu @select="menuClick" router unique-opened>
+            <el-submenu
+              :index="index+''"
+              v-for="(item,index) in routes"
+              v-if="!item.hidden"
+              :key="index"
+            >
               <template slot="title">
-                <i class="el-icon-location"></i>
+                <i style="color: #409eff;margin-right: 5px" :class="item.iconCls"></i>
                 <span>{{item.name}}</span>
               </template>
-              <el-menu-item :index="child.path" v-for="(child,indexj) in item.children" :key="indexj">{{child.name}}</el-menu-item>
+              <el-menu-item
+                :index="child.path"
+                v-for="(child,indexj) in item.children"
+                :key="indexj"
+              >{{child.name}}</el-menu-item>
             </el-submenu>
           </el-menu>
         </el-aside>
         <el-main>
-            <router-view></router-view>
+          <el-breadcrumb
+            separator-class="el-icon-arrow-right"
+            v-if="this.$router.currentRoute.path!='/home'"
+          >
+            <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+            <el-breadcrumb-item>{{this.$router.currentRoute.name}}</el-breadcrumb-item>
+          </el-breadcrumb>
+          <div class="homeWelcome" v-if="this.$router.currentRoute.path=='/home'">欢迎使用激光先进加工与前沿应用团队人事管理系统！</div>
+          <router-view></router-view>
         </el-main>
       </el-container>
     </el-container>
@@ -53,9 +70,14 @@ export default {
       user: JSON.parse(window.sessionStorage.getItem("user"))
     };
   },
+  computed: {
+    routes() {
+      return this.$store.state.routes;
+    }
+  },
   methods: {
-    menuClick(index){
-        this.$router.push(index);
+    menuClick(index) {
+      this.$router.push(index);
     },
     commandHandler(cmd) {
       if (cmd == "logout") {
@@ -68,7 +90,8 @@ export default {
             // 注销登录
             this.getRequest("/logout");
             window.sessionStorage.removeItem("user");
-            //this.$store.commit("initRoutes", []);
+            // 清除store中的菜单信息
+            this.$store.commit("initRoutes", []);
             this.$router.replace("/");
           })
           .catch(() => {

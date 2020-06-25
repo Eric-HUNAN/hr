@@ -4,6 +4,7 @@ import com.wang.hr.server.mapper.MenuMapper;
 import com.wang.hr.server.model.Hr;
 import com.wang.hr.server.model.Menu;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
@@ -19,5 +20,14 @@ public class MenuService {
 
     public List<Menu> getMenusByHrId() {
         return menuMapper.getMenusByHrId(((Hr) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId());
+    }
+
+    /**
+     * 获取所有角色
+     * @return
+     */
+    //这个地方可以加缓存
+    public List<Menu> getAllMenusWithRole() {
+        return menuMapper.getAllMenusWithRole();
     }
 }
