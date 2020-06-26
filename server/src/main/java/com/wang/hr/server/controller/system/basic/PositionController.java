@@ -4,7 +4,6 @@ package com.wang.hr.server.controller.system.basic;
 import com.wang.hr.server.model.Position;
 import com.wang.hr.server.model.Result.RespBean;
 import com.wang.hr.server.service.PositionService;
-import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
