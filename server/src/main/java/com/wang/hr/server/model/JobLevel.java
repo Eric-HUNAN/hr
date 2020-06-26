@@ -11,7 +11,7 @@ public class JobLevel {
 
     private String titleLevel;
 
-    @JsonFormat
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date createDate;
 
     private Boolean enabled;
