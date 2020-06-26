@@ -55,7 +55,7 @@
             <el-breadcrumb-item>{{this.$router.currentRoute.name}}</el-breadcrumb-item>
           </el-breadcrumb>
           <div class="homeWelcome" v-if="this.$router.currentRoute.path=='/home'">欢迎使用激光先进加工与前沿应用团队人事管理系统！</div>
-          <router-view></router-view>
+          <router-view class="homeRouterView"></router-view>
         </el-main>
       </el-container>
     </el-container>
