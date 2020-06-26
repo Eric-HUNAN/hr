@@ -42,11 +42,20 @@ public class PositionController {
     }
 
     @DeleteMapping("/{id}")
-    public RespBean deletePosition(@PathVariable("id") int id){
-        if(positionService.deletePosition(id) == 1){
+    public RespBean deletePositionById(@PathVariable("id") Integer id){
+        if(positionService.deletePositionById(id) == 1){
             return RespBean.ok("删除成功!");
         }else{
             return RespBean.error("删除失败!");
+        }
+    }
+
+    @DeleteMapping("/")
+    public RespBean deletePositionByIds(Integer[] ids){
+        if(positionService.deletePositionByIds(ids) == ids.length){
+            return RespBean.ok("批量删除成功");
+        }else{
+            return RespBean.error("批量删除失败!");
         }
     }
 }
