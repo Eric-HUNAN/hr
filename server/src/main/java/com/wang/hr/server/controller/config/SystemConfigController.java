@@ -1,4 +1,4 @@
-package com.wang.hr.server.controller;
+package com.wang.hr.server.controller.config;
 
 import com.wang.hr.server.model.Menu;
 import com.wang.hr.server.service.MenuService;
