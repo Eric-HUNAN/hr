@@ -22,7 +22,7 @@ Vue.prototype.deleteRequest = deleteRequest;
 Vue.prototype.getRequest = getRequest;
 
 
-Vue.use(ElementUI)
+Vue.use(ElementUI, {size:'small'})
 
 // 全局导航守卫
 router.beforeEach((to, from, next) => {

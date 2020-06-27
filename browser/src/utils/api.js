@@ -1,6 +1,7 @@
 // 处理axios请求错误
 import axios from 'axios'
 import { Message } from 'element-ui'
+import router from '../router'
 
 axios.interceptors.response.use(
     success => {
@@ -12,14 +13,14 @@ axios.interceptors.response.use(
             Message.success({ message: success.data.msg })
         }
         return success.data;
-    },
-    error => {
-        if(error.response.status==504 || error.respose.status==404){
+    },error => {
+        if(error.response.status==504 || error.response.status==404){
             Message.error({message : "服务器异常！"})
         }else if(error.response.status==403){
             Message.error({message : "权限不足！"})
-        }else if(error.respose.status==401){
+        }else if(error.response.status==401){
             Message.error({message : "请先登录！"})
+            router.replace("/")
         }else{
             if(error.response.data.msg){
                 Message.error({message : error.response.data.msg})

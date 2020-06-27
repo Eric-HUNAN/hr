@@ -13,9 +13,29 @@
     <result column="userface" property="userface" jdbcType="VARCHAR" />
     <result column="remark" property="remark" jdbcType="VARCHAR" />
   </resultMap>
+  <resultMap id="HrWithRolesMap" type="com.wang.hr.server.model.Hr" extends="BaseResultMap">
+    <collection property="roles" ofType="com.wang.hr.server.model.Role">
+      <id column="rid" property="id"/>
+      <id column="rname" property="name"/>
+      <id column="rnameZh" property="nameZh"/>
+    </collection>
+  </resultMap>
   <sql id="Base_Column_List" >
     id, name, phone, telephone, address, enabled, username, password, userface, remark
   </sql>
+  <select id="getAllHrs" resultMap="HrWithRolesMap">
+    SELECT h.id, h.name, h.phone, h.telephone, h.address, h.enabled, h.username, h.userface, h.remark, r.`id` AS rid, r.`name` AS rname, r.`nameZh` AS rnameZh
+    FROM hr h
+    LEFT JOIN hr_role hrr
+    ON h.`id`=hrr.`hrid`
+    LEFT JOIN role r
+    ON hrr.`rid`=r.`id`
+    WHERE h.`id`!=#{hrId}
+    <if test="keywords!=null">
+      and h.name like concat('%',#{keywords},'%')
+    </if>
+    order by h.id
+  </select>
   <select id="getHrRolesById" resultType="com.wang.hr.server.model.Role">
     select r.* from role r,hr_role hrr where hrr.`rid`=r.`id` and hrr.`hrid`=#{id}
   </select>
