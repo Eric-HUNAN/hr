@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>hrserver</artifactId>
+        <groupId>com.wang.hr</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>server-service</artifactId>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.wang.hr</groupId>
+            <artifactId>server-mapper</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        <!--导出数据-->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>3.11</version>
+        </dependency>
+    </dependencies>
+
+
+</project>
